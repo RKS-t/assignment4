@@ -1,6 +1,6 @@
 package com.example.scheduleproject.dto.member;
 
-public class SignUpResponseDto {
+public class MemberResponseDto {
 
     private Long id;
 
@@ -8,7 +8,7 @@ public class SignUpResponseDto {
 
     private String username;
 
-    public SignUpResponseDto(Long id, String email, String username) {
+    public MemberResponseDto(Long id, String email, String username) {
         this.id = id;
         this.email = email;
         this.username = username;

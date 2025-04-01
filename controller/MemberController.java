@@ -1,18 +1,19 @@
 package com.example.scheduleproject.controller;
 
+import com.example.scheduleproject.common.Const;
+import com.example.scheduleproject.dto.member.LoginRequestDto;
+import com.example.scheduleproject.dto.member.LoginResponseDto;
 import com.example.scheduleproject.dto.member.SignUpRequestDto;
-import com.example.scheduleproject.dto.member.SignUpResponseDto;
-import com.example.scheduleproject.entity.Member;
+import com.example.scheduleproject.dto.member.MemberResponseDto;
 import com.example.scheduleproject.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -23,9 +24,9 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> SignUp(@Valid @RequestBody SignUpRequestDto dto){
+    public ResponseEntity<MemberResponseDto> signUp(@Valid @RequestBody SignUpRequestDto dto){
 
-        SignUpResponseDto signUpResponseDto =
+        MemberResponseDto memberResponseDto =
                 memberService.signUp(
                         dto.getEmail(),
                         dto.getPassword(),
@@ -33,7 +34,35 @@ public class MemberController {
                         dto.getUsername()
                 );
 
-        return new ResponseEntity<>(signUpResponseDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(memberResponseDto, HttpStatus.CREATED);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberResponseDto> findById(@PathVariable Long id){
+        MemberResponseDto memberResponseDto = memberService.findById(id);
+
+        return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Map<String,String>> login(@Valid @RequestBody LoginRequestDto dto, HttpServletRequest request){
+
+        LoginResponseDto responseDto = memberService.login(dto.getEmail(), dto.getPassword());
+        Long userId = responseDto.getId();
+
+        if (userId == null){
+            return new ResponseEntity<>(Map.of("errors", "로그인에 실패하였습니다."),HttpStatus.BAD_REQUEST);
+        }
+
+        HttpSession session = request.getSession();
+
+        MemberResponseDto loginUser = memberService.findById(userId);
+
+        session.setAttribute(Const.LOGIN_USER, loginUser);
+
+        return new ResponseEntity<>(Map.of("message", "로그인에 성공하였습니다."),HttpStatus.OK);
+
+    }
+
 
 }

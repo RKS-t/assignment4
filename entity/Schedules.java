@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "schedule")
-public class Schedule extends BaseEntity{
+@Table(name = "schedules")
+public class Schedules extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,17 +16,17 @@ public class Schedule extends BaseEntity{
     @Column(nullable = false)
     private String title;
 
-    @Column(columnDefinition = "longtxet")
+    @Column(columnDefinition = "longtext")
     private String contents;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public Schedule() {
+    public Schedules() {
     }
 
-    public Schedule(String title, String contents) {
+    public Schedules(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
