@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "Schedule")
+@Table(name = "schedule")
 public class Schedule extends BaseEntity{
 
     @Id
@@ -29,5 +29,9 @@ public class Schedule extends BaseEntity{
     public Schedule(String title, String contents) {
         this.title = title;
         this.contents = contents;
+    }
+
+    public void setMember(Member member){
+        this.member = member;
     }
 }
