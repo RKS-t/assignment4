@@ -64,5 +64,18 @@ public class MemberController {
 
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<Map<String,String>> logout(HttpServletRequest request){
+
+        HttpSession session = request.getSession(false);
+
+        if (session != null){
+            session.invalidate();
+        }
+
+        return new ResponseEntity<>(Map.of("message", "로그아웃하였습니다."),HttpStatus.OK);
+
+    }
+
 
 }
