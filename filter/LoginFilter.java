@@ -13,6 +13,7 @@ import java.io.IOException;
 
 public class LoginFilter implements Filter {
 
+    //화이트리스트 제외한 URI 접속 시도시 로그인 세션 필요
     @Override
     public void doFilter(
             ServletRequest servletRequest,

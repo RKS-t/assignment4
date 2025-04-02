@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-
+    //아이디를 이용한 조회에 대한 null 예외처리
     default Member findMemberByIdOrElseThrow(Long id){
         return findById(id).orElseThrow(() ->
                 new ResponseStatusException(
@@ -20,6 +20,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
         );
     }
 
+    //email을 이용한 조회에 대한 null 예외처리
     Optional<Member> findMemberByEmail(String email);
 
     default Member findMemberByEmailOrElseThrow(String email){

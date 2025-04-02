@@ -20,6 +20,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    //회원가입 기능
     @PostMapping("/signup")
     public ResponseEntity<MemberResponseDto> signUp(@Valid @RequestBody SignUpRequestDto dto){
 
@@ -36,6 +37,7 @@ public class MemberController {
         return new ResponseEntity<>(memberResponseDto, HttpStatus.CREATED);
     }
 
+    //특정한 회원 정보를 조회
     @GetMapping("/{id}")
     public ResponseEntity<MemberResponseDto> findById(@PathVariable Long id){
         MemberResponseDto memberResponseDto = memberService.findMemberById(id);
@@ -43,6 +45,7 @@ public class MemberController {
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
 
+    //세션 로그인 기능
     @PostMapping("/login")
     public ResponseEntity<Map<String,String>> login(@Valid @RequestBody LoginRequestDto dto, HttpServletRequest request){
 
@@ -59,6 +62,7 @@ public class MemberController {
 
     }
 
+    //로그아웃 기능
     @PostMapping("/logout")
     public ResponseEntity<Map<String,String>> logout(HttpServletRequest request){
 
@@ -72,6 +76,7 @@ public class MemberController {
 
     }
 
+    //특정한 회원 정보를 수정
     @PatchMapping("/{id}")
     public ResponseEntity<Map<String,String>> updateMember (
             @PathVariable Long id,
@@ -82,6 +87,7 @@ public class MemberController {
         return new ResponseEntity<>(Map.of("message", "회원정보가 수정되었습니다."),HttpStatus.OK);
     }
 
+    //특정한 회원 정보를 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String,String>> deleteMember(
             @PathVariable Long id,

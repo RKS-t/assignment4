@@ -17,7 +17,7 @@ public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
 
-
+    //회원가입 기능
     @Override
     public MemberResponseDto signUp(String email, String password, String passwordCheck, String username) {
 
@@ -38,6 +38,7 @@ public class MemberServiceImpl implements MemberService{
         );
     }
 
+    //특정한 회원 정보를 조회
     @Override
     public MemberResponseDto findMemberById(Long id) {
 
@@ -52,9 +53,11 @@ public class MemberServiceImpl implements MemberService{
         );
     }
 
+    //로그인 기능
     @Override
     public LoginResponseDto login(String email, String password) {
 
+        //입력받은 email로 회원정보 찾기
         Member member = memberRepository.findMemberByEmailOrElseThrow(email);
 
         passwordValidate(member.getPassword(), password);
@@ -62,6 +65,7 @@ public class MemberServiceImpl implements MemberService{
         return new LoginResponseDto(member.getId());
     }
 
+    //특정한 회원 정보를 수정
     @Transactional
     @Override
     public void updateMember(Long id, String password, String newPassword, String newPasswordCheck, String newUsername) {
@@ -78,6 +82,7 @@ public class MemberServiceImpl implements MemberService{
 
     }
 
+    //특정한 회원 정보를 삭제
     @Override
     public void deleteMember(Long id, String password) {
 
@@ -88,11 +93,13 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.delete(member);
     }
 
+
+    //비밀번호 검증 함수
     @Override
     public void passwordValidate(String password, String inputPassword) {
 
         if(!password.equals(inputPassword)){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"잘못된 아이디 혹은 비밀번호입니다.");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"잘못된 비밀번호입니다.");
         }
 
     }
