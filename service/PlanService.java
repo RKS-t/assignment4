@@ -11,4 +11,5 @@ public interface PlanService {
 
     SinglePlanResponseDto save(PlanRequestDto dto, MemberResponseDto loginUser);
     List<PlanResponseDto> findAll();
+    List<PlanResponseDto> findPlanByUserName(String username);
 }

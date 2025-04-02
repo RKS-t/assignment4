@@ -39,6 +39,14 @@ public class PlanController {
         return new ResponseEntity<>(planResponseDtoList, HttpStatus.OK);
     }
 
+    @GetMapping("/{username}")
+    public ResponseEntity<List<PlanResponseDto>> findPlanByUserName(@PathVariable String username){
+
+        List<PlanResponseDto> planResponseDtoList = planService.findPlanByUserName(username);
+
+        return new ResponseEntity<>(planResponseDtoList, HttpStatus.OK);
+    }
+
 
 
 }

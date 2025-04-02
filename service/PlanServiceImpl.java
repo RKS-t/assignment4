@@ -47,5 +47,10 @@ public class PlanServiceImpl implements PlanService{
         return planRepository.findAll().stream().map(PlanResponseDto::toDto).toList();
     }
 
+    @Override
+    public List<PlanResponseDto> findPlanByUserName(String username) {
+        return planRepository.findPlanByMemberUsernameOrElseThrow(username).stream().map(PlanResponseDto::toDto).toList();
+    }
+
 
 }
