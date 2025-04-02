@@ -1,5 +1,8 @@
 package com.example.scheduleproject.dto.member;
 
+import lombok.Getter;
+
+@Getter
 public class MemberResponseDto {
 
     private Long id;

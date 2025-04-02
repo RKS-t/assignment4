@@ -50,10 +50,6 @@ public class MemberController {
         LoginResponseDto responseDto = memberService.login(dto.getEmail(), dto.getPassword());
         Long userId = responseDto.getId();
 
-        if (userId == null){
-            return new ResponseEntity<>(Map.of("errors", "로그인에 실패하였습니다."),HttpStatus.BAD_REQUEST);
-        }
-
         HttpSession session = request.getSession();
 
         MemberResponseDto loginUser = memberService.findById(userId);

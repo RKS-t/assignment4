@@ -2,7 +2,7 @@ package com.example.scheduleproject.service;
 
 import com.example.scheduleproject.dto.member.LoginResponseDto;
 import com.example.scheduleproject.dto.member.MemberResponseDto;
-import com.example.scheduleproject.entity.Member;
+
 
 public interface MemberService {
 

@@ -3,7 +3,7 @@ package com.example.scheduleproject.repository;
 import com.example.scheduleproject.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;

@@ -6,11 +6,9 @@ import com.example.scheduleproject.entity.Member;
 import com.example.scheduleproject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +20,7 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public MemberResponseDto signUp(String email, String password, String passwordCheck, String username) {
 
-        if(password.equals(passwordCheck)){
+        if(!password.equals(passwordCheck)){
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 

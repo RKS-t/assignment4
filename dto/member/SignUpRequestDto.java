@@ -14,14 +14,14 @@ public class SignUpRequestDto {
     private final String email;
 
     @NotBlank
-    @Size(min = 8, max = 30)
+    @Size(min = 8, max = 60)
     private final String password;
 
     @NotBlank
     private final String passwordCheck;
 
     @NotBlank
-    @Max(30)
+    @Size(max=30)
     private final String username;
 
     public SignUpRequestDto(String email, String password, String passwordCheck, String username) {
