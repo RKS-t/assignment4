@@ -34,6 +34,7 @@ public class Plan extends BaseEntity{
 
     public Plan(String title, LocalDate targetDate, String contents) {
         this.title = title;
+        this.targetDate = targetDate;
         this.contents = contents;
     }
 

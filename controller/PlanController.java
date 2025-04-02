@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -47,6 +48,20 @@ public class PlanController {
         return new ResponseEntity<>(planResponseDtoList, HttpStatus.OK);
     }
 
+    @GetMapping("/{date}")
+    public ResponseEntity<List<PlanResponseDto>> findPlanByDate(@PathVariable LocalDate date){
+
+        List<PlanResponseDto> planResponseDtoList = planService.findPlanByDate(date);
+
+        return new ResponseEntity<>(planResponseDtoList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PlanResponseDto> findById(@PathVariable Long id){
+
+        PlanResponseDto planResponseDto = planService.
+
+    }
 
 
 }

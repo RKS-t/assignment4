@@ -11,6 +11,7 @@ import com.example.scheduleproject.repository.PlanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -50,6 +51,28 @@ public class PlanServiceImpl implements PlanService{
     @Override
     public List<PlanResponseDto> findPlanByUserName(String username) {
         return planRepository.findPlanByMemberUsernameOrElseThrow(username).stream().map(PlanResponseDto::toDto).toList();
+    }
+
+    @Override
+    public List<PlanResponseDto> findPlanByDate(LocalDate date) {
+        return planRepository.findPlanByMemberTargetDateOrElseThrow(date).stream().map(PlanResponseDto::toDto).toList();
+    }
+
+    @Override
+    public SinglePlanResponseDto findPlanById(Long id) {
+
+        Plan plan = planRepository.findPlanByIdOrElseThrow(id);
+
+        return new SinglePlanResponseDto(
+                plan.getId(),
+                plan.getTitle(),
+                plan.getTargetDate(),
+                plan.getContents(),
+                plan.getCreatedAt(),
+                plan.getModifiedAt(),
+                plan.getMember().getEmail(),
+                plan.getMember().getUsername()
+        );
     }
 
 
