@@ -77,5 +77,13 @@ public class PlanController {
         return new ResponseEntity<>(singlePlanResponseDto, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String,String>> deletePlan(@PathVariable Long id, HttpSession session){
 
+        MemberResponseDto loginUser = (MemberResponseDto) session.getAttribute(Const.LOGIN_USER);
+
+        planService.deletePlan(id, loginUser);
+
+        return new ResponseEntity<>(Map.of("message", "계획이 삭제되었습니다."),HttpStatus.OK);
+    }
 }

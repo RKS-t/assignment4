@@ -100,5 +100,17 @@ public class PlanServiceImpl implements PlanService{
         );
     }
 
+    @Override
+    public void deletePlan(Long id, MemberResponseDto loginUser) {
+
+        Plan plan = planRepository.findPlanByIdOrElseThrow(id);
+
+        if(loginUser.getId()!=id){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"작성자가 아닙니다.");
+        }
+
+        planRepository.delete(plan);
+    }
+
 
 }

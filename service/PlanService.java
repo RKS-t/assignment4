@@ -16,5 +16,5 @@ public interface PlanService {
     List<PlanResponseDto> findPlanByDate(LocalDate date);
     SinglePlanResponseDto findPlanById(Long id);
     SinglePlanResponseDto updatePlan(Long id, PlanRequestDto dto, MemberResponseDto loginUser);
-
+    void deletePlan(Long id, MemberResponseDto loginUser);
 }
