@@ -57,9 +57,11 @@ public class PlanController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PlanResponseDto> findById(@PathVariable Long id){
+    public ResponseEntity<SinglePlanResponseDto> findPlanById(@PathVariable Long id){
 
-        PlanResponseDto planResponseDto = planService.
+        SinglePlanResponseDto singlePlanResponseDto = planService.findPlanById(id);
+
+        return new ResponseEntity<>(singlePlanResponseDto,HttpStatus.OK);
 
     }
 
