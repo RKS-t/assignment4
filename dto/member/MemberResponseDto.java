@@ -2,6 +2,8 @@ package com.example.scheduleproject.dto.member;
 
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class MemberResponseDto {
 
@@ -11,9 +13,15 @@ public class MemberResponseDto {
 
     private String username;
 
-    public MemberResponseDto(Long id, String email, String username) {
+    private final LocalDateTime createdAt;
+
+    private final LocalDateTime modifiedAt;
+
+    public MemberResponseDto(Long id, String email, String username, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.id = id;
         this.email = email;
         this.username = username;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
     }
 }

@@ -1,10 +1,7 @@
 package com.example.scheduleproject.controller;
 
 import com.example.scheduleproject.common.Const;
-import com.example.scheduleproject.dto.member.LoginRequestDto;
-import com.example.scheduleproject.dto.member.LoginResponseDto;
-import com.example.scheduleproject.dto.member.SignUpRequestDto;
-import com.example.scheduleproject.dto.member.MemberResponseDto;
+import com.example.scheduleproject.dto.member.*;
 import com.example.scheduleproject.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -34,12 +31,14 @@ public class MemberController {
                         dto.getUsername()
                 );
 
+
+
         return new ResponseEntity<>(memberResponseDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<MemberResponseDto> findById(@PathVariable Long id){
-        MemberResponseDto memberResponseDto = memberService.findById(id);
+        MemberResponseDto memberResponseDto = memberService.findMemberById(id);
 
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
@@ -52,7 +51,7 @@ public class MemberController {
 
         HttpSession session = request.getSession();
 
-        MemberResponseDto loginUser = memberService.findById(userId);
+        MemberResponseDto loginUser = memberService.findMemberById(userId);
 
         session.setAttribute(Const.LOGIN_USER, loginUser);
 
@@ -71,6 +70,26 @@ public class MemberController {
 
         return new ResponseEntity<>(Map.of("message", "로그아웃하였습니다."),HttpStatus.OK);
 
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Map<String,String>> updateMember (
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateMemberRequestDto dto
+            ){
+        memberService.updateMember(id, dto.getPassword(), dto.getNewPassword(), dto.getNewPasswordCheck(),dto.getNewUsername());
+
+        return new ResponseEntity<>(Map.of("message", "회원정보가 수정되었습니다."),HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String,String>> deleteMember(
+            @PathVariable Long id,
+            @Valid @RequestBody DeleteMemberRequestDto dto){
+
+        memberService.deleteMember(id, dto.getPassword());
+
+        return new ResponseEntity<>(Map.of("message", "회원정보가 삭제되었습니다."),HttpStatus.OK);
     }
 
 

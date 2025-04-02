@@ -4,6 +4,7 @@ import com.example.scheduleproject.dto.member.LoginResponseDto;
 import com.example.scheduleproject.dto.member.MemberResponseDto;
 import com.example.scheduleproject.entity.Member;
 import com.example.scheduleproject.repository.MemberRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,17 +29,27 @@ public class MemberServiceImpl implements MemberService{
 
         Member savedMember = memberRepository.save(member);
 
-        return new MemberResponseDto(savedMember.getId(), savedMember.getEmail(), savedMember.getUsername());
-
+        return new MemberResponseDto(
+                savedMember.getId(),
+                savedMember.getEmail(),
+                savedMember.getUsername(),
+                savedMember.getCreatedAt(),
+                savedMember.getModifiedAt()
+        );
     }
 
     @Override
-    public MemberResponseDto findById(Long id) {
+    public MemberResponseDto findMemberById(Long id) {
 
-        Member member = memberRepository.findByIdOrElseThrow(id);
+        Member member = memberRepository.findMemberByIdOrElseThrow(id);
 
-        return new MemberResponseDto(member.getId(), member.getEmail(), member.getUsername());
-
+        return new MemberResponseDto(
+                member.getId(),
+                member.getEmail(),
+                member.getUsername(),
+                member.getCreatedAt(),
+                member.getModifiedAt()
+        );
     }
 
     @Override
@@ -46,11 +57,44 @@ public class MemberServiceImpl implements MemberService{
 
         Member member = memberRepository.findMemberByEmailOrElseThrow(email);
 
-        if(!member.getPassword().equals(password)){
+        passwordValidate(member.getPassword(), password);
+
+        return new LoginResponseDto(member.getId());
+    }
+
+    @Transactional
+    @Override
+    public void updateMember(Long id, String password, String newPassword, String newPasswordCheck, String newUsername) {
+
+        if(!newPassword.equals(newPasswordCheck)){
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        Member member = memberRepository.findMemberByIdOrElseThrow(id);
+
+        passwordValidate(member.getPassword(), password);
+
+        member.updatePasswordAndUsername(newPassword, newUsername);
+
+    }
+
+    @Override
+    public void deleteMember(Long id, String password) {
+
+        Member member = memberRepository.findMemberByIdOrElseThrow(id);
+
+        passwordValidate(member.getPassword(), password);
+
+        memberRepository.delete(member);
+    }
+
+    @Override
+    public void passwordValidate(String password, String inputPassword) {
+
+        if(!password.equals(inputPassword)){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"잘못된 아이디 혹은 비밀번호입니다.");
         }
 
-        return new LoginResponseDto(member.getId());
     }
 
 
