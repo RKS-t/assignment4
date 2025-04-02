@@ -25,7 +25,7 @@ public class PlanServiceImpl implements PlanService{
 
         Member findMember = memberRepository.findMemberByEmailOrElseThrow(loginUser.getEmail());
 
-        Plan plan = new Plan(dto.getTitle(), dto.getContents());
+        Plan plan = new Plan(dto.getTitle(), dto.getTargetDate(), dto.getContents());
         plan.setMember(findMember);
 
         planRepository.save(plan);
@@ -33,6 +33,7 @@ public class PlanServiceImpl implements PlanService{
         return new SinglePlanResponseDto(
                 plan.getId(),
                 plan.getTitle(),
+                plan.getTargetDate(),
                 plan.getContents(),
                 plan.getCreatedAt(),
                 plan.getModifiedAt(),

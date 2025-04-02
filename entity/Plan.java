@@ -2,7 +2,10 @@ package com.example.scheduleproject.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+
+import java.time.LocalDate;
 
 @Getter
 @Entity
@@ -16,6 +19,9 @@ public class Plan extends BaseEntity{
     @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
+    private LocalDate targetDate;
+
     @Column(columnDefinition = "longtext")
     private String contents;
 
@@ -26,7 +32,7 @@ public class Plan extends BaseEntity{
     public Plan() {
     }
 
-    public Plan(String title, String contents) {
+    public Plan(String title, LocalDate targetDate, String contents) {
         this.title = title;
         this.contents = contents;
     }

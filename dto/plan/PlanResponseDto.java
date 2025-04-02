@@ -1,40 +1,37 @@
 package com.example.scheduleproject.dto.plan;
 
-import lombok.Getter;
+import com.example.scheduleproject.entity.Plan;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
 public class PlanResponseDto {
 
     private final Long id;
 
     private final String title;
 
-    private final String contents;
+    private final LocalDate targetDate;
 
-    private LocalDateTime createdAt;
-
-    private LocalDateTime modifiedAt;
+    private final LocalDateTime createdAt;
 
     private final String username;
 
-    private final String email;
-
-    public PlanResponseDto(Long id,
-                           String title,
-                           String contents,
-                           LocalDateTime createdAt,
-                           LocalDateTime modifiedAt,
-                           String username,
-                           String email
-    ) {
+    public PlanResponseDto(Long id, String title, LocalDate targetDate, LocalDateTime createdAt, String username) {
         this.id = id;
         this.title = title;
-        this.contents = contents;
+        this.targetDate = targetDate;
         this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
         this.username = username;
-        this.email = email;
+    }
+
+    public static PlanResponseDto toDto(Plan plan){
+        return new PlanResponseDto(
+                plan.getId(),
+                plan.getTitle(),
+                plan.getTargetDate(),
+                plan.getCreatedAt(),
+                plan.getMember().getUsername()
+        );
     }
 }
