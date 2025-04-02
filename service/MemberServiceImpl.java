@@ -2,6 +2,8 @@ package com.example.scheduleproject.service;
 
 import com.example.scheduleproject.dto.member.LoginResponseDto;
 import com.example.scheduleproject.dto.member.MemberResponseDto;
+import com.example.scheduleproject.dto.member.SignUpRequestDto;
+import com.example.scheduleproject.dto.member.UpdateMemberRequestDto;
 import com.example.scheduleproject.entity.Member;
 import com.example.scheduleproject.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -19,13 +21,13 @@ public class MemberServiceImpl implements MemberService{
 
     //회원가입 기능
     @Override
-    public MemberResponseDto signUp(String email, String password, String passwordCheck, String username) {
+    public MemberResponseDto signUp(SignUpRequestDto dto) {
 
-        if(!password.equals(passwordCheck)){
+        if(!dto.getPassword().equals(dto.getPasswordCheck())){
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        Member member = new Member(email, password, username);
+        Member member = new Member(dto.getEmail(), dto.getPassword(), dto.getUsername());
 
         Member savedMember = memberRepository.save(member);
 
@@ -68,13 +70,14 @@ public class MemberServiceImpl implements MemberService{
     /*특정한 회원 정보를 수정*/
     @Transactional
     @Override
-    public void updateMember(Long id, String password, String newPassword, String newPasswordCheck, String newUsername) {
-        
+    public void updateMember(Long id, UpdateMemberRequestDto dto) {
 
+        String newPassword = dto.getNewPassword();
+        String newPasswordCheck = dto.getNewPasswordCheck();
+        String newUsername = dto.getNewUsername();
         Member member = memberRepository.findMemberByIdOrElseThrow(id);
 
-        passwordValidate(member.getPassword(), password);
-
+        passwordValidate(member.getPassword(), dto.getPassword());
         /*
         비밀번호 변경 입력에 아무것도 없을 시 이름만 변경
         비밀번호가 입력값이 있고 확인과 같을시 비밀번호도 변경

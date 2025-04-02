@@ -24,15 +24,7 @@ public class MemberController {
     @PostMapping("/signup")
     public ResponseEntity<MemberResponseDto> signUp(@Valid @RequestBody SignUpRequestDto dto){
 
-        MemberResponseDto memberResponseDto =
-                memberService.signUp(
-                        dto.getEmail(),
-                        dto.getPassword(),
-                        dto.getPasswordCheck(),
-                        dto.getUsername()
-                );
-
-
+        MemberResponseDto memberResponseDto = memberService.signUp(dto);
 
         return new ResponseEntity<>(memberResponseDto, HttpStatus.CREATED);
     }
@@ -82,7 +74,8 @@ public class MemberController {
             @PathVariable Long id,
             @Valid @RequestBody UpdateMemberRequestDto dto
             ){
-        memberService.updateMember(id, dto.getPassword(), dto.getNewPassword(), dto.getNewPasswordCheck(),dto.getNewUsername());
+
+        memberService.updateMember(id, dto);
 
         return new ResponseEntity<>(Map.of("message", "회원정보가 수정되었습니다."),HttpStatus.OK);
     }

@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "schedules")
-public class Schedules extends BaseEntity{
+@Table(name = "plan")
+public class Plan extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +23,10 @@ public class Schedules extends BaseEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public Schedules() {
+    public Plan() {
     }
 
-    public Schedules(String title, String contents) {
+    public Plan(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
