@@ -10,7 +10,6 @@ public class UpdateMemberRequestDto {
     @NotBlank
     private final String password;
 
-    @NotBlank
     @Size(min = 8, max = 60)
     private final String newPassword;
 

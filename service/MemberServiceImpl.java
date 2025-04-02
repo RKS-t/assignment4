@@ -65,20 +65,31 @@ public class MemberServiceImpl implements MemberService{
         return new LoginResponseDto(member.getId());
     }
 
-    //특정한 회원 정보를 수정
+    /*특정한 회원 정보를 수정*/
     @Transactional
     @Override
     public void updateMember(Long id, String password, String newPassword, String newPasswordCheck, String newUsername) {
-
-        if(!newPassword.equals(newPasswordCheck)){
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
+        
 
         Member member = memberRepository.findMemberByIdOrElseThrow(id);
 
         passwordValidate(member.getPassword(), password);
 
-        member.updatePasswordAndUsername(newPassword, newUsername);
+        /*
+        비밀번호 변경 입력에 아무것도 없을 시 이름만 변경
+        비밀번호가 입력값이 있고 확인과 같을시 비밀번호도 변경
+         */
+        if(newPassword == null && newPasswordCheck == null){
+            member.updateUsername(newUsername);
+        } else if (newPassword == null ^ newPasswordCheck == null) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        } else if(!newPassword.equals(newPasswordCheck)){
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        } else {
+            member.updatePasswordAndUsername(newPassword, newUsername);
+        }
+
+
 
     }
 
@@ -94,7 +105,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
 
-    //비밀번호 검증 함수
+    /*비밀번호 검증 함수*/
     @Override
     public void passwordValidate(String password, String inputPassword) {
 
