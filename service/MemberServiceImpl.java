@@ -113,7 +113,7 @@ public class MemberServiceImpl implements MemberService{
     public void passwordValidate(String password, String inputPassword) {
 
         if(!password.equals(inputPassword)){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"잘못된 비밀번호입니다.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"잘못된 비밀번호입니다.");
         }
 
     }

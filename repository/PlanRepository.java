@@ -25,11 +25,11 @@ public interface PlanRepository extends JpaRepository<Plan,Long> {
         return plans;
     }
 
-    List<Plan> findPlanByMemberTargetDate(LocalDate date);
+    List<Plan> findPlanByTargetDate(LocalDate date);
 
-    default List<Plan> findPlanByMemberTargetDateOrElseThrow(LocalDate date){
+    default List<Plan> findPlanByTargetDateOrElseThrow(LocalDate date){
 
-        List<Plan> plans = findPlanByMemberTargetDate(date);
+        List<Plan> plans = findPlanByTargetDate(date);
         if (plans.isEmpty()){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,

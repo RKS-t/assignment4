@@ -9,7 +9,9 @@ import com.example.scheduleproject.entity.Plan;
 import com.example.scheduleproject.repository.MemberRepository;
 import com.example.scheduleproject.repository.PlanRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -55,13 +57,36 @@ public class PlanServiceImpl implements PlanService{
 
     @Override
     public List<PlanResponseDto> findPlanByDate(LocalDate date) {
-        return planRepository.findPlanByMemberTargetDateOrElseThrow(date).stream().map(PlanResponseDto::toDto).toList();
+        return planRepository.findPlanByTargetDateOrElseThrow(date).stream().map(PlanResponseDto::toDto).toList();
     }
 
     @Override
     public SinglePlanResponseDto findPlanById(Long id) {
 
         Plan plan = planRepository.findPlanByIdOrElseThrow(id);
+
+        return new SinglePlanResponseDto(
+                plan.getId(),
+                plan.getTitle(),
+                plan.getTargetDate(),
+                plan.getContents(),
+                plan.getCreatedAt(),
+                plan.getModifiedAt(),
+                plan.getMember().getEmail(),
+                plan.getMember().getUsername()
+        );
+    }
+
+    @Override
+    public SinglePlanResponseDto updatePlan(Long id, PlanRequestDto dto, MemberResponseDto loginUser) {
+
+        Plan plan = planRepository.findPlanByIdOrElseThrow(id);
+
+        if(loginUser.getId()!=id){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"작성자가 아닙니다.");
+        }
+
+        plan.updatePlan(dto.getTitle(), dto.getTargetDate(), dto.getContents());
 
         return new SinglePlanResponseDto(
                 plan.getId(),

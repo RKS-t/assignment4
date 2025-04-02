@@ -7,6 +7,7 @@ import com.example.scheduleproject.dto.plan.PlanResponseDto;
 import com.example.scheduleproject.dto.plan.SinglePlanResponseDto;
 import com.example.scheduleproject.service.PlanService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/plans")
@@ -63,6 +65,16 @@ public class PlanController {
 
         return new ResponseEntity<>(singlePlanResponseDto,HttpStatus.OK);
 
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<SinglePlanResponseDto> updatePlan(@PathVariable Long id, @Valid @RequestBody PlanRequestDto dto, HttpSession session){
+
+        MemberResponseDto loginUser = (MemberResponseDto) session.getAttribute(Const.LOGIN_USER);
+
+        SinglePlanResponseDto singlePlanResponseDto = planService.updatePlan(id, dto, loginUser);
+
+        return new ResponseEntity<>(singlePlanResponseDto, HttpStatus.OK);
     }
 
 

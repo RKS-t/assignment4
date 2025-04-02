@@ -41,4 +41,10 @@ public class Plan extends BaseEntity{
     public void setMember(Member member){
         this.member = member;
     }
+
+    public void updatePlan(String title, LocalDate targetDate, String contents){
+        this.title = title;
+        this.targetDate = targetDate;
+        this.contents = contents;
+    }
 }
