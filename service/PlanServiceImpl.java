@@ -1,6 +1,7 @@
 package com.example.scheduleproject.service;
 
-import com.example.scheduleproject.config.AuthValidator;
+import com.example.scheduleproject.config.MemberValidator;
+import com.example.scheduleproject.config.PasswordEncoder;
 import com.example.scheduleproject.dto.member.MemberResponseDto;
 import com.example.scheduleproject.dto.plan.PlanRequestDto;
 import com.example.scheduleproject.dto.plan.PlanResponseDto;
@@ -11,9 +12,7 @@ import com.example.scheduleproject.repository.MemberRepository;
 import com.example.scheduleproject.repository.PlanRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,7 +23,7 @@ public class PlanServiceImpl implements PlanService{
 
     private final PlanRepository planRepository;
     private final MemberRepository memberRepository;
-    private final AuthValidator authValidator;
+    private final MemberValidator memberValidator;
 
     @Override
     public SinglePlanResponseDto savePlan(PlanRequestDto dto, MemberResponseDto loginUser) {
@@ -82,11 +81,11 @@ public class PlanServiceImpl implements PlanService{
 
     @Transactional
     @Override
-    public SinglePlanResponseDto updatePlan(Long id, PlanRequestDto dto, MemberResponseDto loginUser) {
+    public SinglePlanResponseDto updatePlan(Long id, PlanRequestDto dto) {
 
         Plan plan = planRepository.findPlanByIdOrElseThrow(id);
 
-        authValidator.memberValidate(plan.getMember().getId(), loginUser.getId());
+        memberValidator.memberValidate(plan.getMember().getId());
 
         plan.updatePlan(dto.getTitle(), dto.getTargetDate(), dto.getContents());
 
@@ -103,11 +102,11 @@ public class PlanServiceImpl implements PlanService{
     }
 
     @Override
-    public void deletePlan(Long id, MemberResponseDto loginUser) {
+    public void deletePlan(Long id) {
 
         Plan plan = planRepository.findPlanByIdOrElseThrow(id);
 
-        authValidator.memberValidate(plan.getMember().getId(), loginUser.getId());
+        memberValidator.memberValidate(plan.getMember().getId());
 
         planRepository.delete(plan);
     }

@@ -68,21 +68,17 @@ public class PlanController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<SinglePlanResponseDto> updatePlan(@PathVariable Long id, @Valid @RequestBody PlanRequestDto dto, HttpSession session){
+    public ResponseEntity<SinglePlanResponseDto> updatePlan(@PathVariable Long id, @Valid @RequestBody PlanRequestDto dto){
 
-        MemberResponseDto loginUser = (MemberResponseDto) session.getAttribute(Const.LOGIN_USER);
-
-        SinglePlanResponseDto singlePlanResponseDto = planService.updatePlan(id, dto, loginUser);
+        SinglePlanResponseDto singlePlanResponseDto = planService.updatePlan(id, dto);
 
         return new ResponseEntity<>(singlePlanResponseDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String,String>> deletePlan(@PathVariable Long id, HttpSession session){
+    public ResponseEntity<Map<String,String>> deletePlan(@PathVariable Long id){
 
-        MemberResponseDto loginUser = (MemberResponseDto) session.getAttribute(Const.LOGIN_USER);
-
-        planService.deletePlan(id, loginUser);
+        planService.deletePlan(id);
 
         return new ResponseEntity<>(Map.of("message", "계획이 삭제되었습니다."),HttpStatus.OK);
     }

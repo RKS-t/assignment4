@@ -1,6 +1,6 @@
 package com.example.scheduleproject.service;
 
-import com.example.scheduleproject.config.AuthValidator;
+import com.example.scheduleproject.config.PasswordEncoder;
 import com.example.scheduleproject.dto.member.LoginResponseDto;
 import com.example.scheduleproject.dto.member.MemberResponseDto;
 import com.example.scheduleproject.dto.member.SignUpRequestDto;
@@ -21,7 +21,7 @@ public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
 
-    private final AuthValidator passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     //회원가입 기능
     @Override

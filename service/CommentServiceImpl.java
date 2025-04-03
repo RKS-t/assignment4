@@ -1,10 +1,10 @@
 package com.example.scheduleproject.service;
 
-import com.example.scheduleproject.config.AuthValidator;
+import com.example.scheduleproject.config.MemberValidator;
+import com.example.scheduleproject.config.PasswordEncoder;
 import com.example.scheduleproject.dto.comment.CommentRequestDto;
 import com.example.scheduleproject.dto.comment.CommentResponseDto;
 import com.example.scheduleproject.dto.member.MemberResponseDto;
-import com.example.scheduleproject.dto.plan.PlanResponseDto;
 import com.example.scheduleproject.entity.Comment;
 import com.example.scheduleproject.entity.Member;
 import com.example.scheduleproject.entity.Plan;
@@ -23,7 +23,7 @@ public class CommentServiceImpl implements CommentService{
     private final CommentRepository commentRepository;
     private final PlanRepository planRepository;
     private final MemberRepository memberRepository;
-    private final AuthValidator authValidator;
+    private final MemberValidator memberValidator;
 
     @Override
     public CommentResponseDto saveComment(Long planId, CommentRequestDto dto, MemberResponseDto loginUser) {
@@ -54,6 +54,10 @@ public class CommentServiceImpl implements CommentService{
         return commentRepository.findCommentByPlanId(planId).stream().map(CommentResponseDto::toDto).toList();
     }
 
+    @Override
+    public void updateComment(Long planId, Long id, CommentRequestDto dto) {
+
+    }
 
 
 }

@@ -43,4 +43,18 @@ public class CommentController {
         return new ResponseEntity<>(commentResponseDtoList, HttpStatus.OK);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String,String>> updateComment(
+            @PathVariable Long planId,
+            @PathVariable Long id,
+            CommentRequestDto dto
+    ){
+
+
+        return new ResponseEntity<>(Map.of("message", "계획이 삭제되었습니다."),HttpStatus.OK);
+    }
+
+
+
+
 }
