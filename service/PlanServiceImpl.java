@@ -53,12 +53,12 @@ public class PlanServiceImpl implements PlanService{
 
     @Override
     public List<PlanResponseDto> findPlanByUserName(String username) {
-        return planRepository.findPlanByMemberUsernameOrElseThrow(username).stream().map(PlanResponseDto::toDto).toList();
+        return planRepository.findPlanByMemberUsername(username).stream().map(PlanResponseDto::toDto).toList();
     }
 
     @Override
     public List<PlanResponseDto> findPlanByDate(LocalDate date) {
-        return planRepository.findPlanByTargetDateOrElseThrow(date).stream().map(PlanResponseDto::toDto).toList();
+        return planRepository.findPlanByTargetDate(date).stream().map(PlanResponseDto::toDto).toList();
     }
 
     @Override

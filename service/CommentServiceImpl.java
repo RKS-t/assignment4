@@ -3,6 +3,7 @@ package com.example.scheduleproject.service;
 import com.example.scheduleproject.dto.comment.CommentRequestDto;
 import com.example.scheduleproject.dto.comment.CommentResponseDto;
 import com.example.scheduleproject.dto.member.MemberResponseDto;
+import com.example.scheduleproject.dto.plan.PlanResponseDto;
 import com.example.scheduleproject.entity.Comment;
 import com.example.scheduleproject.entity.Member;
 import com.example.scheduleproject.entity.Plan;
@@ -12,16 +13,15 @@ import com.example.scheduleproject.repository.PlanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService{
 
     private final CommentRepository commentRepository;
-
     private final PlanRepository planRepository;
-
     private final MemberRepository memberRepository;
-
 
     @Override
     public CommentResponseDto saveComment(Long planId, CommentRequestDto dto, MemberResponseDto loginUser) {
@@ -45,4 +45,11 @@ public class CommentServiceImpl implements CommentService{
                 comment.getMember().getEmail()
         );
     }
+
+    @Override
+    public List<CommentResponseDto> findByPlanId(Long planId) {
+
+        return commentRepository.findCommentByPlanId(planId).stream().map(CommentResponseDto::toDto).toList();
+    }
+
 }

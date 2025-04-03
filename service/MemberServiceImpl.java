@@ -1,12 +1,11 @@
 package com.example.scheduleproject.service;
 
-import com.example.scheduleproject.config.PasswordEncoder;
+import com.example.scheduleproject.config.AuthValidator;
 import com.example.scheduleproject.dto.member.LoginResponseDto;
 import com.example.scheduleproject.dto.member.MemberResponseDto;
 import com.example.scheduleproject.dto.member.SignUpRequestDto;
 import com.example.scheduleproject.dto.member.UpdateMemberRequestDto;
 import com.example.scheduleproject.entity.Member;
-import com.example.scheduleproject.exception.LoginFailException;
 import com.example.scheduleproject.exception.PasswordCheckFailException;
 import com.example.scheduleproject.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -22,7 +21,7 @@ public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    private final AuthValidator passwordEncoder;
 
     //회원가입 기능
     @Override

@@ -1,5 +1,6 @@
 package com.example.scheduleproject.dto.comment;
 
+import com.example.scheduleproject.entity.Comment;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -27,6 +28,17 @@ public class CommentResponseDto {
         this.modifiedAt = modifiedAt;
         this.username = username;
         this.email = email;
+    }
+
+    public static CommentResponseDto toDto(Comment comment){
+        return new CommentResponseDto(
+                comment.getId(),
+                comment.getContents(),
+                comment.getCreatedAt(),
+                comment.getModifiedAt(),
+                comment.getMember().getUsername(),
+                comment.getMember().getEmail()
+        );
     }
 
 

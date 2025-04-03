@@ -8,16 +8,21 @@ import com.example.scheduleproject.service.CommentService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
+@RequestMapping("/plans/{planId}/comments")
 @RequiredArgsConstructor
 public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/plans/{planId}")
+    @PostMapping
     public ResponseEntity<CommentResponseDto> saveComment(
             @PathVariable Long planId,
             @Valid @RequestBody CommentRequestDto dto,
@@ -25,11 +30,17 @@ public class CommentController {
     ){
         MemberResponseDto loginUser = (MemberResponseDto) session.getAttribute(Const.LOGIN_USER);
 
+        CommentResponseDto commentResponseDto = commentService.saveComment(planId, dto, loginUser);
 
-
+        return new ResponseEntity<>(commentResponseDto, HttpStatus.CREATED);
     }
 
+    @GetMapping
+    public ResponseEntity<List<CommentResponseDto>> findByPlanId (@PathVariable Long planId){
 
+        List<CommentResponseDto> commentResponseDtoList = commentService.findByPlanId(planId);
 
+        return new ResponseEntity<>(commentResponseDtoList, HttpStatus.OK);
+    }
 
 }
