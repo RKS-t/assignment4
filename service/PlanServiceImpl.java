@@ -1,5 +1,6 @@
 package com.example.scheduleproject.service;
 
+import com.example.scheduleproject.config.AuthValidator;
 import com.example.scheduleproject.dto.member.MemberResponseDto;
 import com.example.scheduleproject.dto.plan.PlanRequestDto;
 import com.example.scheduleproject.dto.plan.PlanResponseDto;
@@ -23,6 +24,7 @@ public class PlanServiceImpl implements PlanService{
 
     private final PlanRepository planRepository;
     private final MemberRepository memberRepository;
+    private final AuthValidator authValidator;
 
     @Override
     public SinglePlanResponseDto savePlan(PlanRequestDto dto, MemberResponseDto loginUser) {
@@ -84,9 +86,7 @@ public class PlanServiceImpl implements PlanService{
 
         Plan plan = planRepository.findPlanByIdOrElseThrow(id);
 
-        if(plan.getMember().getId()!=loginUser.getId()){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"작성자가 아닙니다.");
-        }
+        authValidator.memberValidate(plan.getMember().getId(), loginUser.getId());
 
         plan.updatePlan(dto.getTitle(), dto.getTargetDate(), dto.getContents());
 
@@ -107,9 +107,7 @@ public class PlanServiceImpl implements PlanService{
 
         Plan plan = planRepository.findPlanByIdOrElseThrow(id);
 
-        if(plan.getMember().getId()!=loginUser.getId()){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"작성자가 아닙니다.");
-        }
+        authValidator.memberValidate(plan.getMember().getId(), loginUser.getId());
 
         planRepository.delete(plan);
     }

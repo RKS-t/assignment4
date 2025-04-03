@@ -1,5 +1,6 @@
 package com.example.scheduleproject.service;
 
+import com.example.scheduleproject.config.AuthValidator;
 import com.example.scheduleproject.dto.comment.CommentRequestDto;
 import com.example.scheduleproject.dto.comment.CommentResponseDto;
 import com.example.scheduleproject.dto.member.MemberResponseDto;
@@ -22,6 +23,7 @@ public class CommentServiceImpl implements CommentService{
     private final CommentRepository commentRepository;
     private final PlanRepository planRepository;
     private final MemberRepository memberRepository;
+    private final AuthValidator authValidator;
 
     @Override
     public CommentResponseDto saveComment(Long planId, CommentRequestDto dto, MemberResponseDto loginUser) {
@@ -51,5 +53,7 @@ public class CommentServiceImpl implements CommentService{
 
         return commentRepository.findCommentByPlanId(planId).stream().map(CommentResponseDto::toDto).toList();
     }
+
+
 
 }

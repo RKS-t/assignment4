@@ -1,15 +1,12 @@
 package com.example.scheduleproject.config;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.example.scheduleproject.common.Const;
-import com.example.scheduleproject.dto.member.MemberResponseDto;
 import com.example.scheduleproject.exception.LoginFailException;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.net.http.HttpClient;
+
 
 @Component
 public class AuthValidator {
