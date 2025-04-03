@@ -48,12 +48,6 @@ public class MyExceptionHandler {
         return new ResponseEntity<>(Map.of("error", ex.getMessage()),HttpStatus.BAD_REQUEST);
     }
 
-    //경로가 잘못되었을 때 예외
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public ResponseEntity<Map<String,String>> handleNoHandlerFoundException(NoHandlerFoundException ex){
-        return new ResponseEntity<>(Map.of("error", "존재하지 않는 경로입니다."),HttpStatus.NOT_FOUND);
-    }
-
     //요청 경로 타입이 불일치 할때 예외
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Map<String, String>> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
