@@ -1,6 +1,7 @@
 package com.example.scheduleproject.handler;
 
 import com.example.scheduleproject.exception.LoginFailException;
+import com.example.scheduleproject.exception.MismatchException;
 import com.example.scheduleproject.exception.NullResponseException;
 import com.example.scheduleproject.exception.PasswordCheckFailException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -72,5 +73,11 @@ public class MyExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Map<String, String>> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         return new ResponseEntity<>(Map.of("error", "이미 존재하는 이메일입니다."), HttpStatus.CONFLICT);
+    }
+
+    //댓글과 계획의 아이디 불일치
+    @ExceptionHandler(MismatchException.class)
+    public ResponseEntity<Map<String,String>> handleMismatchException(MismatchException ex){
+        return new ResponseEntity<>(Map.of("error", ex.getMessage()), HttpStatus.NOT_FOUND);
     }
 }

@@ -12,4 +12,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findCommentByPlanId(Long id);
 
+    default Comment findCommentByIdOrElseThrow(Long id){
+        return findById(id).orElseThrow(() -> new NullResponseException("Dose not exist comment by id =" + id));
+    }
 }

@@ -8,9 +8,11 @@ import com.example.scheduleproject.dto.member.MemberResponseDto;
 import com.example.scheduleproject.entity.Comment;
 import com.example.scheduleproject.entity.Member;
 import com.example.scheduleproject.entity.Plan;
+import com.example.scheduleproject.exception.MismatchException;
 import com.example.scheduleproject.repository.CommentRepository;
 import com.example.scheduleproject.repository.MemberRepository;
 import com.example.scheduleproject.repository.PlanRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -54,10 +56,23 @@ public class CommentServiceImpl implements CommentService{
         return commentRepository.findCommentByPlanId(planId).stream().map(CommentResponseDto::toDto).toList();
     }
 
+    @Transactional
     @Override
     public void updateComment(Long planId, Long id, CommentRequestDto dto) {
 
+        Comment comment = commentRepository.findCommentByIdOrElseThrow(id);
+
+        if(planId!=comment.getPlan().getId()){
+            throw new MismatchException();
+        }
+
+        memberValidator.memberValidate(comment.getMember().getId());
+
+        comment.updateComment(dto.getContents());
+
     }
+
+
 
 
 }

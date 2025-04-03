@@ -49,7 +49,7 @@ public class CommentController {
             @PathVariable Long id,
             CommentRequestDto dto
     ){
-
+        commentService.updateComment(planId, id, dto);
 
         return new ResponseEntity<>(Map.of("message", "계획이 삭제되었습니다."),HttpStatus.OK);
     }
