@@ -11,5 +11,5 @@ public interface CommentService {
     CommentResponseDto saveComment(Long planId, CommentRequestDto dto, MemberResponseDto loginUser);
     List<CommentResponseDto> findByPlanId(Long id);
     void updateComment(Long planId, Long id, CommentRequestDto dto);
-
+    void deleteComment(Long planId, Long id);
 }

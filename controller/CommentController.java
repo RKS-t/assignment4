@@ -51,9 +51,20 @@ public class CommentController {
     ){
         commentService.updateComment(planId, id, dto);
 
-        return new ResponseEntity<>(Map.of("message", "계획이 삭제되었습니다."),HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message", "댓글이 수정되었습니다."),HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String,String>> deleteComment(
+            @PathVariable Long planId,
+            @PathVariable Long id
+    ) {
+
+        commentService.deleteComment(planId, id);
+
+        return new ResponseEntity<>(Map.of("message", "댓글이 삭제되었습니다."), HttpStatus.OK);
+
+    }
 
 
 

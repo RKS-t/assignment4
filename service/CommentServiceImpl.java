@@ -72,7 +72,20 @@ public class CommentServiceImpl implements CommentService{
 
     }
 
+    @Override
+    public void deleteComment(Long planId, Long id) {
 
+        Comment comment = commentRepository.findCommentByIdOrElseThrow(id);
+
+        if(planId!=comment.getPlan().getId()){
+            throw new MismatchException();
+        }
+
+        memberValidator.memberValidate(comment.getMember().getId());
+
+        commentRepository.delete(comment);
+
+    }
 
 
 }
