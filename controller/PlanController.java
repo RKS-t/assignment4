@@ -42,7 +42,7 @@ public class PlanController {
         return new ResponseEntity<>(planResponseDtoList, HttpStatus.OK);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/name/{username}")
     public ResponseEntity<List<PlanResponseDto>> findPlanByUserName(@PathVariable String username){
 
         List<PlanResponseDto> planResponseDtoList = planService.findPlanByUserName(username);
@@ -50,7 +50,7 @@ public class PlanController {
         return new ResponseEntity<>(planResponseDtoList, HttpStatus.OK);
     }
 
-    @GetMapping("/{date}")
+    @GetMapping("/date/{date}")
     public ResponseEntity<List<PlanResponseDto>> findPlanByDate(@PathVariable LocalDate date){
 
         List<PlanResponseDto> planResponseDtoList = planService.findPlanByDate(date);

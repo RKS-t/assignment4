@@ -90,6 +90,4 @@ public class MemberController {
 
         return new ResponseEntity<>(Map.of("message", "회원정보가 삭제되었습니다."),HttpStatus.OK);
     }
-
-
 }

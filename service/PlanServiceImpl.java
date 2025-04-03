@@ -8,6 +8,7 @@ import com.example.scheduleproject.entity.Member;
 import com.example.scheduleproject.entity.Plan;
 import com.example.scheduleproject.repository.MemberRepository;
 import com.example.scheduleproject.repository.PlanRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class PlanServiceImpl implements PlanService{
     @Override
     public SinglePlanResponseDto save(PlanRequestDto dto, MemberResponseDto loginUser) {
 
-        Member findMember = memberRepository.findMemberByEmailOrElseThrow(loginUser.getEmail());
+        Member findMember = memberRepository.findMemberByIdOrElseThrow(loginUser.getId());
 
         Plan plan = new Plan(dto.getTitle(), dto.getTargetDate(), dto.getContents());
         plan.setMember(findMember);
@@ -77,12 +78,13 @@ public class PlanServiceImpl implements PlanService{
         );
     }
 
+    @Transactional
     @Override
     public SinglePlanResponseDto updatePlan(Long id, PlanRequestDto dto, MemberResponseDto loginUser) {
 
         Plan plan = planRepository.findPlanByIdOrElseThrow(id);
 
-        if(loginUser.getId()!=id){
+        if(plan.getMember().getId()!=loginUser.getId()){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,"작성자가 아닙니다.");
         }
 
@@ -105,7 +107,7 @@ public class PlanServiceImpl implements PlanService{
 
         Plan plan = planRepository.findPlanByIdOrElseThrow(id);
 
-        if(loginUser.getId()!=id){
+        if(plan.getMember().getId()!=loginUser.getId()){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,"작성자가 아닙니다.");
         }
 

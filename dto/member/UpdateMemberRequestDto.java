@@ -1,6 +1,7 @@
 package com.example.scheduleproject.dto.member;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
@@ -10,7 +11,8 @@ public class UpdateMemberRequestDto {
     @NotBlank
     private final String password;
 
-    @Size(min = 8, max = 60)
+    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d).{8,30}$",
+            message = "비밀번호는 8자 이상 30자 이하이며, 영문과 숫자를 포함해야 합니다.")
     private final String newPassword;
 
     private final String newPasswordCheck;

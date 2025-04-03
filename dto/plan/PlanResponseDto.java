@@ -1,10 +1,12 @@
 package com.example.scheduleproject.dto.plan;
 
 import com.example.scheduleproject.entity.Plan;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Getter
 public class PlanResponseDto {
 
     private final Long id;

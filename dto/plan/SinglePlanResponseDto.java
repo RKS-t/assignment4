@@ -31,8 +31,8 @@ public class SinglePlanResponseDto {
                                  String contents,
                                  LocalDateTime createdAt,
                                  LocalDateTime modifiedAt,
-                                 String username,
-                                 String email
+                                 String email,
+                                 String username
     ) {
         this.id = id;
         this.title = title;
@@ -40,20 +40,8 @@ public class SinglePlanResponseDto {
         this.contents = contents;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
-        this.username = username;
         this.email = email;
+        this.username = username;
     }
 
-    public static SinglePlanResponseDto toDto(Plan plan){
-        return new SinglePlanResponseDto(
-                plan.getId(),
-                plan.getTitle(),
-                plan.getTargetDate(),
-                plan.getContents(),
-                plan.getCreatedAt(),
-                plan.getModifiedAt(),
-                plan.getMember().getUsername(),
-                plan.getMember().getEmail()
-        );
-    }
 }

@@ -5,6 +5,8 @@ import com.example.scheduleproject.dto.member.MemberResponseDto;
 import com.example.scheduleproject.dto.member.SignUpRequestDto;
 import com.example.scheduleproject.dto.member.UpdateMemberRequestDto;
 import com.example.scheduleproject.entity.Member;
+import com.example.scheduleproject.exception.LoginFailException;
+import com.example.scheduleproject.exception.PasswordCheckFailException;
 import com.example.scheduleproject.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,7 @@ public class MemberServiceImpl implements MemberService{
     public MemberResponseDto signUp(SignUpRequestDto dto) {
 
         if(!dto.getPassword().equals(dto.getPasswordCheck())){
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new PasswordCheckFailException();
         }
 
         Member member = new Member(dto.getEmail(), dto.getPassword(), dto.getUsername());
@@ -85,15 +87,14 @@ public class MemberServiceImpl implements MemberService{
         if(newPassword == null && newPasswordCheck == null){
             member.updateUsername(newUsername);
         } else if (newPassword == null ^ newPasswordCheck == null) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new PasswordCheckFailException();
         } else if(!newPassword.equals(newPasswordCheck)){
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new PasswordCheckFailException();
+        } else if(!newPassword.equals(member.getPassword())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "동일한 비밀번호로는 바꿀 수 없습니다.");
         } else {
             member.updatePasswordAndUsername(newPassword, newUsername);
         }
-
-
-
     }
 
     //특정한 회원 정보를 삭제
@@ -113,9 +114,8 @@ public class MemberServiceImpl implements MemberService{
     public void passwordValidate(String password, String inputPassword) {
 
         if(!password.equals(inputPassword)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"잘못된 비밀번호입니다.");
+            throw new LoginFailException("잘못된 비밀번호입니다.");
         }
-
     }
 
 

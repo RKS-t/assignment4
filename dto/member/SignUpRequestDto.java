@@ -1,9 +1,6 @@
 package com.example.scheduleproject.dto.member;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 
 @Getter
@@ -14,7 +11,8 @@ public class SignUpRequestDto {
     private final String email;
 
     @NotBlank
-    @Size(min = 8, max = 60)
+    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d).{8,30}$",
+            message = "비밀번호는 8자 이상 30자 이하이며, 영문과 숫자를 포함해야 합니다.")
     private final String password;
 
     @NotBlank
