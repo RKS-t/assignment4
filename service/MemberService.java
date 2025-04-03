@@ -13,5 +13,4 @@ public interface MemberService {
     LoginResponseDto login(String email, String password);
     void updateMember(Long id, UpdateMemberRequestDto dto);
     void deleteMember(Long id, String password);
-    void passwordValidate (String password, String inputPassword);
 }

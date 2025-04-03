@@ -1,5 +1,6 @@
 package com.example.scheduleproject.service;
 
+import com.example.scheduleproject.config.PasswordEncoder;
 import com.example.scheduleproject.dto.member.LoginResponseDto;
 import com.example.scheduleproject.dto.member.MemberResponseDto;
 import com.example.scheduleproject.dto.member.SignUpRequestDto;
@@ -21,6 +22,8 @@ public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     //회원가입 기능
     @Override
     public MemberResponseDto signUp(SignUpRequestDto dto) {
@@ -29,7 +32,9 @@ public class MemberServiceImpl implements MemberService{
             throw new PasswordCheckFailException();
         }
 
-        Member member = new Member(dto.getEmail(), dto.getPassword(), dto.getUsername());
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+
+        Member member = new Member(dto.getEmail(), encodedPassword, dto.getUsername());
 
         Member savedMember = memberRepository.save(member);
 
@@ -64,7 +69,7 @@ public class MemberServiceImpl implements MemberService{
         //입력받은 email로 회원정보 찾기
         Member member = memberRepository.findMemberByEmailOrElseThrow(email);
 
-        passwordValidate(member.getPassword(), password);
+        passwordEncoder.matches(password, member.getPassword());
 
         return new LoginResponseDto(member.getId());
     }
@@ -79,7 +84,8 @@ public class MemberServiceImpl implements MemberService{
         String newUsername = dto.getNewUsername();
         Member member = memberRepository.findMemberByIdOrElseThrow(id);
 
-        passwordValidate(member.getPassword(), dto.getPassword());
+        passwordEncoder.matches(dto.getPassword(), member.getPassword());
+
         /*
         비밀번호 변경 입력에 아무것도 없을 시 이름만 변경
         비밀번호가 입력값이 있고 확인과 같을시 비밀번호도 변경
@@ -93,7 +99,8 @@ public class MemberServiceImpl implements MemberService{
         } else if(!newPassword.equals(member.getPassword())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "동일한 비밀번호로는 바꿀 수 없습니다.");
         } else {
-            member.updatePasswordAndUsername(newPassword, newUsername);
+            String newEncodedPassword = passwordEncoder.encode(newPassword);
+            member.updatePasswordAndUsername(newEncodedPassword, newUsername);
         }
     }
 
@@ -103,19 +110,9 @@ public class MemberServiceImpl implements MemberService{
 
         Member member = memberRepository.findMemberByIdOrElseThrow(id);
 
-        passwordValidate(member.getPassword(), password);
+        passwordEncoder.matches(password, member.getPassword());
 
         memberRepository.delete(member);
-    }
-
-
-    /*비밀번호 검증 함수*/
-    @Override
-    public void passwordValidate(String password, String inputPassword) {
-
-        if(!password.equals(inputPassword)){
-            throw new LoginFailException("잘못된 비밀번호입니다.");
-        }
     }
 
 
