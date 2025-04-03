@@ -1,6 +1,6 @@
 package com.example.scheduleproject.handler;
 
-import com.example.scheduleproject.exception.LoginFailException;
+import com.example.scheduleproject.exception.LoginAuthException;
 import com.example.scheduleproject.exception.MismatchException;
 import com.example.scheduleproject.exception.NullResponseException;
 import com.example.scheduleproject.exception.PasswordCheckFailException;
@@ -40,8 +40,8 @@ public class MyExceptionHandler {
     }
 
     //로그인 및 비밀번호 관련 예외
-    @ExceptionHandler(LoginFailException.class)
-    public ResponseEntity<Map<String,String>> handleLoginFailException(LoginFailException ex){
+    @ExceptionHandler(LoginAuthException.class)
+    public ResponseEntity<Map<String,String>> handleLoginAuthException(LoginAuthException ex){
         return new ResponseEntity<>(Map.of("error", ex.getMessage()),HttpStatus.UNAUTHORIZED);
     }
 

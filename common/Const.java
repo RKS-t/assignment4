@@ -5,7 +5,10 @@ public interface Const {
     String[] WHITE_LIST = {
             "/",
             "/members/signup",
-            "/members/login",
-            "/members/logout"
+            "/members/login"
+    };
+    String[] BLOCK_LIST = {
+            "/members/signup",
+            "/members/login"
     };
 }

@@ -1,7 +1,7 @@
 package com.example.scheduleproject.repository;
 
 import com.example.scheduleproject.entity.Member;
-import com.example.scheduleproject.exception.LoginFailException;
+import com.example.scheduleproject.exception.LoginAuthException;
 import com.example.scheduleproject.exception.NullResponseException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -22,7 +22,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     default Member findMemberByEmailOrElseThrow(String email){
         return findMemberByEmail(email).orElseThrow(() ->
-                new LoginFailException("존재하지 않는 이메일입니다.")
+                new LoginAuthException("존재하지 않는 이메일입니다.")
         );
     }
 }

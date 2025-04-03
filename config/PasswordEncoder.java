@@ -1,7 +1,7 @@
 package com.example.scheduleproject.config;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.example.scheduleproject.exception.LoginFailException;
+import com.example.scheduleproject.exception.LoginAuthException;
 import org.springframework.stereotype.Component;
 
 
@@ -15,7 +15,7 @@ public class PasswordEncoder {
     public void matches(String rawPassword, String encodedPassword) {
         BCrypt.Result result = BCrypt.verifyer().verify(rawPassword.toCharArray(), encodedPassword);
         if(!result.verified){
-            throw new LoginFailException("잘못된 비밀번호입니다.");
+            throw new LoginAuthException("잘못된 비밀번호입니다.");
         }
     }
 }

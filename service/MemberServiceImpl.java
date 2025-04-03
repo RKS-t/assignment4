@@ -95,7 +95,7 @@ public class MemberServiceImpl implements MemberService{
             throw new PasswordCheckFailException();
         } else if(!newPassword.equals(newPasswordCheck)){
             throw new PasswordCheckFailException();
-        } else if(!newPassword.equals(member.getPassword())){
+        } else if(newPassword.equals(member.getPassword())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "동일한 비밀번호로는 바꿀 수 없습니다.");
         } else {
             String newEncodedPassword = passwordEncoder.encode(newPassword);
