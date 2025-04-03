@@ -25,7 +25,7 @@ public class PlanServiceImpl implements PlanService{
     private final MemberRepository memberRepository;
 
     @Override
-    public SinglePlanResponseDto save(PlanRequestDto dto, MemberResponseDto loginUser) {
+    public SinglePlanResponseDto savePlan(PlanRequestDto dto, MemberResponseDto loginUser) {
 
         Member findMember = memberRepository.findMemberByIdOrElseThrow(loginUser.getId());
 

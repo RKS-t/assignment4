@@ -25,11 +25,11 @@ public class PlanController {
     private final PlanService planService;
 
     @PostMapping
-    public ResponseEntity<SinglePlanResponseDto> save (@RequestBody PlanRequestDto dto, HttpSession session){
+    public ResponseEntity<SinglePlanResponseDto> savePlan (@RequestBody PlanRequestDto dto, HttpSession session){
 
         MemberResponseDto loginUser = (MemberResponseDto) session.getAttribute(Const.LOGIN_USER);
 
-        SinglePlanResponseDto planResponseDto = planService.save(dto, loginUser);
+        SinglePlanResponseDto planResponseDto = planService.savePlan(dto, loginUser);
 
         return new ResponseEntity<>(planResponseDto, HttpStatus.CREATED);
     }

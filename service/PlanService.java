@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface PlanService {
 
-    SinglePlanResponseDto save(PlanRequestDto dto, MemberResponseDto loginUser);
+    SinglePlanResponseDto savePlan(PlanRequestDto dto, MemberResponseDto loginUser);
     List<PlanResponseDto> findAll();
     List<PlanResponseDto> findPlanByUserName(String username);
     List<PlanResponseDto> findPlanByDate(LocalDate date);
