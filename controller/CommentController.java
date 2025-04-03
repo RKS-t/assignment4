@@ -47,7 +47,7 @@ public class CommentController {
     public ResponseEntity<Map<String,String>> updateComment(
             @PathVariable Long planId,
             @PathVariable Long id,
-            CommentRequestDto dto
+            @Valid @RequestBody CommentRequestDto dto
     ){
         commentService.updateComment(planId, id, dto);
 

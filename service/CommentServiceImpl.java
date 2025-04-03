@@ -14,6 +14,7 @@ import com.example.scheduleproject.repository.MemberRepository;
 import com.example.scheduleproject.repository.PlanRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public List<CommentResponseDto> findByPlanId(Long planId) {
 
-        return commentRepository.findCommentByPlanId(planId).stream().map(CommentResponseDto::toDto).toList();
+        return commentRepository.findAllByPlanId(planId).stream().map(CommentResponseDto::toDto).toList();
     }
 
     @Transactional

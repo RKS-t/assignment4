@@ -29,7 +29,7 @@ public class MemberController {
         return new ResponseEntity<>(memberResponseDto, HttpStatus.CREATED);
     }
 
-    //특정한 회원 정보를 조회
+    //로그한 회원 정보를 조회
     @GetMapping("/{id}")
     public ResponseEntity<MemberResponseDto> findById(@PathVariable Long id){
         MemberResponseDto memberResponseDto = memberService.findMemberById(id);

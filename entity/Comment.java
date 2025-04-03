@@ -20,7 +20,7 @@ public class Comment extends BaseEntity{
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "Plan_id")
+    @JoinColumn(name = "plan_id")
     private Plan plan;
 
     public Comment() {
