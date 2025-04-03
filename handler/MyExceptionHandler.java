@@ -1,9 +1,6 @@
 package com.example.scheduleproject.handler;
 
-import com.example.scheduleproject.exception.LoginAuthException;
-import com.example.scheduleproject.exception.MismatchException;
-import com.example.scheduleproject.exception.NullResponseException;
-import com.example.scheduleproject.exception.PasswordCheckFailException;
+import com.example.scheduleproject.exception.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,5 +76,17 @@ public class MyExceptionHandler {
     @ExceptionHandler(MismatchException.class)
     public ResponseEntity<Map<String,String>> handleMismatchException(MismatchException ex){
         return new ResponseEntity<>(Map.of("error", ex.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    //같은 비밀번호로 변경하려 할시 예외
+    @ExceptionHandler(SamePasswordException.class)
+    public ResponseEntity<Map<String,String>> handleSamePasswordException (SamePasswordException ex){
+        return new ResponseEntity<>(Map.of("error", ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    //같은 비밀번호로 변경하려 할시 예외
+    @ExceptionHandler(MisMatchMemberException.class)
+    public ResponseEntity<Map<String,String>> handleMisMatchMemberException (MisMatchMemberException ex){
+        return new ResponseEntity<>(Map.of("error", ex.getMessage()), HttpStatus.FORBIDDEN);
     }
 }

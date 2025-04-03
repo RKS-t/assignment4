@@ -84,10 +84,18 @@ public class MemberController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String,String>> deleteMember(
             @PathVariable Long id,
-            @Valid @RequestBody DeleteMemberRequestDto dto){
+            @Valid @RequestBody DeleteMemberRequestDto dto,
+            HttpServletRequest request
+    ){
 
         memberService.deleteMember(id, dto.getPassword());
 
-        return new ResponseEntity<>(Map.of("message", "회원정보가 삭제되었습니다."),HttpStatus.OK);
+        HttpSession session = request.getSession(false);
+
+        if (session != null){
+            session.invalidate();
+        }
+
+        return new ResponseEntity<>(Map.of("message", "회원정보가 삭제되었습니다. 자동으로 로그아웃됩니다."),HttpStatus.OK);
     }
 }

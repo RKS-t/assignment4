@@ -8,6 +8,7 @@ import com.example.scheduleproject.dto.member.UpdateMemberRequestDto;
 import com.example.scheduleproject.entity.Member;
 import com.example.scheduleproject.exception.LoginAuthException;
 import com.example.scheduleproject.exception.PasswordCheckFailException;
+import com.example.scheduleproject.exception.SamePasswordException;
 import com.example.scheduleproject.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -98,7 +99,7 @@ public class MemberServiceImpl implements MemberService{
         } else if(!newPassword.equals(newPasswordCheck)){
             throw new PasswordCheckFailException();
         } else if(passwordEncoder.matches(newPassword, member.getPassword())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "동일한 비밀번호로는 바꿀 수 없습니다.");
+            throw new SamePasswordException();
         } else {
             String newEncodedPassword = passwordEncoder.encode(newPassword);
             member.updatePasswordAndUsername(newEncodedPassword, newUsername);

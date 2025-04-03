@@ -2,6 +2,7 @@ package com.example.scheduleproject.dto.plan;
 
 import com.example.scheduleproject.entity.Member;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,7 +16,7 @@ public class PlanRequestDto {
     @Size(max = 50)
     private final String title;
 
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private final LocalDate targetDate;
 
