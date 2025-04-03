@@ -6,6 +6,7 @@ import com.example.scheduleproject.dto.member.MemberResponseDto;
 import com.example.scheduleproject.dto.member.SignUpRequestDto;
 import com.example.scheduleproject.dto.member.UpdateMemberRequestDto;
 import com.example.scheduleproject.entity.Member;
+import com.example.scheduleproject.exception.LoginAuthException;
 import com.example.scheduleproject.exception.PasswordCheckFailException;
 import com.example.scheduleproject.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -83,8 +84,9 @@ public class MemberServiceImpl implements MemberService{
         String newUsername = dto.getNewUsername();
         Member member = memberRepository.findMemberByIdOrElseThrow(id);
 
-        passwordEncoder.matches(dto.getPassword(), member.getPassword());
-
+        if(!passwordEncoder.matches(dto.getPassword(), member.getPassword())){
+            throw new LoginAuthException("잘못된 비밀번호입니다.");
+        }
         /*
         비밀번호 변경 입력에 아무것도 없을 시 이름만 변경
         비밀번호가 입력값이 있고 확인과 같을시 비밀번호도 변경
@@ -95,7 +97,7 @@ public class MemberServiceImpl implements MemberService{
             throw new PasswordCheckFailException();
         } else if(!newPassword.equals(newPasswordCheck)){
             throw new PasswordCheckFailException();
-        } else if(newPassword.equals(member.getPassword())){
+        } else if(passwordEncoder.matches(newPassword, member.getPassword())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "동일한 비밀번호로는 바꿀 수 없습니다.");
         } else {
             String newEncodedPassword = passwordEncoder.encode(newPassword);
@@ -109,7 +111,9 @@ public class MemberServiceImpl implements MemberService{
 
         Member member = memberRepository.findMemberByIdOrElseThrow(id);
 
-        passwordEncoder.matches(password, member.getPassword());
+        if(!passwordEncoder.matches(password, member.getPassword())){
+            throw new LoginAuthException("잘못된 비밀번호입니다.");
+        }
 
         memberRepository.delete(member);
     }

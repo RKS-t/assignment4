@@ -12,10 +12,8 @@ public class PasswordEncoder {
         return BCrypt.withDefaults().hashToString(BCrypt.MIN_COST, rawPassword.toCharArray());
     }
 
-    public void matches(String rawPassword, String encodedPassword) {
+    public boolean matches(String rawPassword, String encodedPassword) {
         BCrypt.Result result = BCrypt.verifyer().verify(rawPassword.toCharArray(), encodedPassword);
-        if(!result.verified){
-            throw new LoginAuthException("잘못된 비밀번호입니다.");
-        }
+        return result.verified;
     }
 }
