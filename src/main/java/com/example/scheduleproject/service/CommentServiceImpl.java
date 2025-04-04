@@ -1,7 +1,6 @@
 package com.example.scheduleproject.service;
 
 import com.example.scheduleproject.config.MemberValidator;
-import com.example.scheduleproject.config.PasswordEncoder;
 import com.example.scheduleproject.dto.comment.CommentRequestDto;
 import com.example.scheduleproject.dto.comment.CommentResponseDto;
 import com.example.scheduleproject.dto.member.MemberResponseDto;
@@ -14,7 +13,6 @@ import com.example.scheduleproject.repository.MemberRepository;
 import com.example.scheduleproject.repository.PlanRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

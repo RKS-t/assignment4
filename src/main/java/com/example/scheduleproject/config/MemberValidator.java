@@ -15,6 +15,7 @@ public class MemberValidator {
 
     public void memberValidate(long id){
 
+        //로그인한 사용자와 작성자 매치
         MemberResponseDto loginUser = (MemberResponseDto) session.getAttribute(Const.LOGIN_USER);
 
         if(id!=loginUser.getId()){

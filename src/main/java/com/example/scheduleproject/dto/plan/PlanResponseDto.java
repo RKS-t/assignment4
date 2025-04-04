@@ -27,6 +27,7 @@ public class PlanResponseDto {
         this.username = username;
     }
 
+    //entity 객체 -> dto 객체 변환
     public static PlanResponseDto toDto(Plan plan){
         return new PlanResponseDto(
                 plan.getId(),

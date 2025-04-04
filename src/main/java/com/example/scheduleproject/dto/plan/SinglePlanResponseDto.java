@@ -1,6 +1,5 @@
 package com.example.scheduleproject.dto.plan;
 
-import com.example.scheduleproject.entity.Plan;
 import lombok.Getter;
 
 import java.time.LocalDate;

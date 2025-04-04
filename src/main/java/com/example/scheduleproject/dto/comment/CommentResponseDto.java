@@ -30,6 +30,7 @@ public class CommentResponseDto {
         this.email = email;
     }
 
+    //entity 객체 -> dto 객체 변환
     public static CommentResponseDto toDto(Comment comment){
         return new CommentResponseDto(
                 comment.getId(),

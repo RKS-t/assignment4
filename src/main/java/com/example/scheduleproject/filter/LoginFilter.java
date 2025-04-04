@@ -30,6 +30,7 @@ public class LoginFilter implements Filter {
 
         HttpSession session = httpRequest.getSession(false);
 
+        //특정URI에 비로그인 사용자 접근 금지
         if(!isWhiteList(requestURI)){
 
             if (session==null||session.getAttribute(Const.LOGIN_USER)==null){
@@ -38,6 +39,7 @@ public class LoginFilter implements Filter {
 
         }
 
+        //특정URI에 로그인 사용자 상태는 접근 금지
         if(isBlockList(requestURI)){
 
             if (session!=null&&session.getAttribute(Const.LOGIN_USER)!=null){

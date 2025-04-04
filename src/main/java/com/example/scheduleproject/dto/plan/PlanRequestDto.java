@@ -1,6 +1,5 @@
 package com.example.scheduleproject.dto.plan;
 
-import com.example.scheduleproject.entity.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

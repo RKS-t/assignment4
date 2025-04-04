@@ -2,7 +2,6 @@ package com.example.scheduleproject.entity;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 import java.time.LocalDate;

@@ -12,9 +12,7 @@ import com.example.scheduleproject.exception.SamePasswordException;
 import com.example.scheduleproject.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
