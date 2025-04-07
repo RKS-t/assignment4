@@ -68,7 +68,9 @@ public class MemberServiceImpl implements MemberService{
         //입력받은 email로 회원정보 찾기
         Member member = memberRepository.findMemberByEmailOrElseThrow(email);
 
-        passwordEncoder.matches(password, member.getPassword());
+        if(!passwordEncoder.matches(password, member.getPassword())){
+            throw new LoginAuthException("잘못된 비밀번호입니다.");
+        }
 
         return new LoginResponseDto(member.getId());
     }
